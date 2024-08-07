@@ -33,7 +33,7 @@ export type Article = {
   __typename: "NodeArticle"
   id: string
   status: boolean
-  title: string
+  label: string
   path: string
   author: Author
   body: {
@@ -42,3 +42,20 @@ export type Article = {
   created: string
   image: Image
 }
+
+
+export type Show = {
+  __typename: "NodeShow";
+  id: string;
+  status: boolean;
+  title: string;
+  fieldShowTagline: string;
+  fieldCoverAlbumArt: {
+    entity: {
+      urlAbsolute: string;
+    };
+  };
+  path: {
+    alias: string;
+  };
+};

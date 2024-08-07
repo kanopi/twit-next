@@ -10,7 +10,6 @@ interface NodeArticleProps {
 export function NodeArticle({ node, ...props }: NodeArticleProps) {
   return (
     <article {...props}>
-      <h1 className="mb-4 text-6xl font-black leading-tight">{node.title}</h1>
       <div className="mb-4 text-gray-600">
         {node.author?.displayName ? (
           <span>
@@ -26,7 +25,7 @@ export function NodeArticle({ node, ...props }: NodeArticleProps) {
             src={node.image.url}
             width={768}
             height={480}
-            alt={node.title}
+            alt={'test'}
           />
         </figure>
       )}
