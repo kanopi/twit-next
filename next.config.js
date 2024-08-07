@@ -4,7 +4,7 @@ const nextConfig = {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
-        protocol: "http",
+        protocol: "https",
         hostname: process.env.NEXT_IMAGE_DOMAIN,
         pathname: "/sites/default/files/**",
       },
