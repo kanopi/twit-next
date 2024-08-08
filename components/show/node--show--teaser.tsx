@@ -18,6 +18,7 @@ const NodeShowTeaser = ({ node }: NodeShowTeaserProps) => {
             width={200}
             height={200}
             alt={node.title}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 200px"
           />
         )}
       </Link>
