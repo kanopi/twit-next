@@ -206,10 +206,9 @@ const ShowDetails = ({ show, episodes }: InferGetStaticPropsType<typeof getStati
                   <Image
                     src={`${episode.fieldHeroImage.entity.urlAbsolute}`}
                     alt={episode.fieldHeroImage.alt}
-                    width={256}
-                    height={256}
+                    width={episode.fieldHeroImage.width}
+                    height={episode.fieldHeroImage.height}
                     className="absolute top-0 left-0 h-full w-full"
-                    priority
                   />
                 )}
                 <div className="bg-black bg-opacity-80 mt-auto text-white z-10 p-4">
