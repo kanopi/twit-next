@@ -55,7 +55,7 @@ const Header = () => {
           </svg>
         </button>
         {/* Navigation Links */}
-        <nav className="hidden lg:flex items-center space-x-4">
+        <nav className="hidden lg:flex items-center space-x-4 z-10">
           <Link href="/shows" className="text-gray-800 hover:text-gray-600">
             PODCAST
           </Link>
