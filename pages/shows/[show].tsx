@@ -183,34 +183,46 @@ const ShowDetails = ({ show, episodes }: InferGetStaticPropsType<typeof getStati
           content={`Details about the show ${show.title}.`}
         />
       </Head>
-      <Image src={show?.fieldHeroImage?.entity?.urlAbsolute} alt={show.fieldHeroImage?.alt} width={1774} height={444} priority={true} />
-      <Link href="/shows" className="bg-blue-600 text-white p-3 inline-block my-4">Back to shows</Link>
-      <h1 className="mb-10 text-6xl font-black my-4">{show.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: show.body }} className="prose inline my-4"/>
-      <div className="grid grid-cols-1 gap-10 my-6 lg:grid-cols-3">
-        {episodes?.length > 0 && episodes.map((episode) => (
-          <div key={episode.id}>
-            <Link href={episode.path.alias} className="relative w-full min-h-64 max-h-64 flex flex-col">
-              {episode.fieldHeroImage && (
-                <Image
-                  src={`${episode.fieldHeroImage.entity.urlAbsolute}`}
-                  alt={episode.fieldHeroImage.alt}
-                  width={256}
-                  height={256}
-                  className="absolute top-0 left-0 h-full w-full"
-                  priority
-                />
-              )}
-              <div className="bg-black bg-opacity-80 mt-auto text-white z-10 p-4">
-                <div className="font-bold">{episode.title}</div>
-                <div dangerouslySetInnerHTML={{ __html: episode.fieldEpisodeTeaser }} />
-              </div>
-            </Link>
-          </div>
-        ))}
+      <div className="relative w-full h-[45dvh] lg:h-[65dvh]">
+        <Image 
+          src={show?.fieldHeroImage?.entity?.urlAbsolute} 
+          alt={show.fieldHeroImage?.alt} 
+          priority={true} 
+          fill={true} 
+          className="object-cover" 
+          loading="eager"
+          sizes="100vw"
+        />
       </div>
+      <div className="container py-10 mx-auto">
+        <Link href="/shows" className="bg-blue-600 text-white p-3 inline-block my-4">Back to shows</Link>
+        <h1 className="mb-10 text-6xl font-black my-4">{show.title}</h1>
+        <div dangerouslySetInnerHTML={{ __html: show.body }} className="prose inline my-4"/>
+        <div className="grid grid-cols-1 gap-10 my-6 lg:grid-cols-3">
+          {episodes?.length > 0 && episodes.map((episode) => (
+            <div key={episode.id}>
+              <Link href={episode.path.alias} className="relative w-full min-h-64 max-h-64 flex flex-col">
+                {episode.fieldHeroImage && (
+                  <Image
+                    src={`${episode.fieldHeroImage.entity.urlAbsolute}`}
+                    alt={episode.fieldHeroImage.alt}
+                    width={256}
+                    height={256}
+                    className="absolute top-0 left-0 h-full w-full"
+                    priority
+                  />
+                )}
+                <div className="bg-black bg-opacity-80 mt-auto text-white z-10 p-4">
+                  <div className="font-bold">{episode.title}</div>
+                  <div dangerouslySetInnerHTML={{ __html: episode.fieldEpisodeTeaser }} />
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
 
-      <div dangerouslySetInnerHTML={{ __html: show.fieldExtendedShowDescription }} className="prose inline"/>
+        <div dangerouslySetInnerHTML={{ __html: show.fieldExtendedShowDescription }} className="prose inline"/>
+      </div>
     </Layout>
   );
 };

@@ -141,19 +141,21 @@ const EpisodePage = ({ episode }: InferGetStaticPropsType<typeof getStaticProps>
 
   return (
     <Layout>
-      <h1>{episode.title}</h1>
-      <div>
-        {episode?.fieldHeroImage?.entity && (
-          <Image
-            src={episode.fieldHeroImage.entity.urlAbsolute}
-            alt={episode.fieldHeroImage.alt}
-            width={parseInt(episode.fieldHeroImage.width, 10)}
-            height={parseInt(episode.fieldHeroImage.height, 10)}
-          />
-        )}
+      <div className="container py-10 mx-auto">
+        <h1>{episode.title}</h1>
+        <div>
+          {episode?.fieldHeroImage?.entity && (
+            <Image
+              src={episode.fieldHeroImage.entity.urlAbsolute}
+              alt={episode.fieldHeroImage.alt}
+              width={parseInt(episode.fieldHeroImage.width, 10)}
+              height={parseInt(episode.fieldHeroImage.height, 10)}
+            />
+          )}
+        </div>
+        <Link href={episode.fieldEpisodeShow.url.path} className="bg-blue-600 text-white p-3 inline-block my-4">{`Back to ${episode.fieldEpisodeShow.title}`}</Link>
+        <div dangerouslySetInnerHTML={{ __html: episode.body }} className="prose inline"/>
       </div>
-      <Link href={episode.fieldEpisodeShow.url.path} className="bg-blue-600 text-white p-3 inline-block my-4">{`Back to ${episode.fieldEpisodeShow.title}`}</Link>
-      <div dangerouslySetInnerHTML={{ __html: episode.body }} className="prose inline"/>
     </Layout>
   );
 };
