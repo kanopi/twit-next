@@ -49,7 +49,7 @@ const MediaSelector = ({ mediaList, fieldHeroImage }) => {
   return (
     <div>
       {/* ReactPlayer Component */}
-      {selectedMedia && (
+      {selectedMedia && selectedMedia?.fieldMediaUrl?.uri?.path && (
         <div
           ref={playerRef}
           className="w-full relative"
