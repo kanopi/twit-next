@@ -1,8 +1,8 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
-import Image from "next/image";
-import { drupal, query } from "lib/drupal";
+import { query } from "lib/drupal";
 import { Layout } from "components/layout";
 import Link from "next/link";
+import MediaSelector from "components/episode/mediaSelector";
 
 interface NodeURLPath {
   path: {
@@ -29,11 +29,19 @@ interface EpisodeData {
   id: string;
   title: string;
   body: string;
-  fieldHeroImage: ImageData;
   fieldEpisodeShow: {
     title: string;
     url: {
       path: string;
+    }
+  }
+  fieldHeroImage: ImageData;
+  fieldEpisodeMedia: {
+    fieldMediaFormat: string;
+    fieldMediaUrl: {
+      uri: {
+        path: string;
+      }
     }
   }
 }
@@ -71,8 +79,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
     const segments = item.path.alias.split('/');
     return {
       params: {
-        show: segments[2], // Adjust index based on your URL structure
-        episode: segments[4], // Adjust index based on your URL structure
+        show: segments[2], // Get show-title in url /show/[show-title]
+        episode: segments[4], // Get epsiode-title in url /show/[show-title]/episodes/[epsiode-title]
       },
     };
   });
@@ -100,18 +108,27 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
                 id
                 title
                 body
+                fieldEpisodeShow {
+                  title
+                  url {
+                    path
+                  }
+                }
+                fieldEpisodeMedia {
+                  id
+                  fieldMediaFormat
+                  fieldMediaUrl {
+                    uri {
+                      path
+                    }
+                  }
+                }
                 fieldHeroImage {
                   alt
                   width
                   height
                   entity {
                     urlAbsolute
-                  }
-                }
-                fieldEpisodeShow {
-                  title
-                  url {
-                    path
                   }
                 }
               }
@@ -130,6 +147,7 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
   };
 };
 
+
 const EpisodePage = ({ episode }: InferGetStaticPropsType<typeof getStaticProps>) => {
   if (!episode) {
     return (
@@ -142,18 +160,16 @@ const EpisodePage = ({ episode }: InferGetStaticPropsType<typeof getStaticProps>
   return (
     <Layout>
       <div className="container py-10 mx-auto">
-        <h1>{episode.title}</h1>
-        <div>
-          {episode?.fieldHeroImage?.entity && (
-            <Image
-              src={episode.fieldHeroImage.entity.urlAbsolute}
-              alt={episode.fieldHeroImage.alt}
-              width={parseInt(episode.fieldHeroImage.width, 10)}
-              height={parseInt(episode.fieldHeroImage.height, 10)}
-            />
-          )}
+        <h1 className="mb-10 text-6xl font-black my-4">{episode.title}</h1>
+        <div className="flex flex-row gap-2 my-4">
+          <Link href="/shows" className="bg-blue-600 text-white p-3 inline-block my-4">{`All Shows`}</Link>
+          <Link href={episode.fieldEpisodeShow.url.path} className="bg-blue-600 text-white p-3 inline-block my-4">{`Back to ${episode.fieldEpisodeShow.title}`}</Link>
         </div>
-        <Link href={episode.fieldEpisodeShow.url.path} className="bg-blue-600 text-white p-3 inline-block my-4">{`Back to ${episode.fieldEpisodeShow.title}`}</Link>
+
+
+        {episode.fieldEpisodeMedia?.length > 0 && (
+          <MediaSelector mediaList={episode.fieldEpisodeMedia}  fieldHeroImage={episode?.fieldHeroImage}/>
+        )}
         <div dangerouslySetInnerHTML={{ __html: episode.body }} className="prose inline"/>
       </div>
     </Layout>
